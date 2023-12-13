@@ -1,0 +1,190 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>忘记密码</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <style>
+        body {
+            {#background-image: linear-gradient(to left, #d9edf7, #d5d5d5);#}
+            {#display: flex;#}
+            {#justify-content: center;#}
+            {#align-items: center;#}
+            {#height: 100vh;#}
+            background-image: url('{% static 'bg.jpg' %}');
+            background-size: cover;
+        }
+
+        .box {
+            backdrop-filter: blur(10px) brightness(103%);
+            box-shadow: -3px 3px 15px  #adadad;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="container box col-sm-8 col-sm-offset-2" style="margin-top: 50px;">
+    <fieldset class="col-md-12">
+        <legend><h2 class="text-center"><b>重置密码</b></h2></legend>
+        <form class="form-horizontal" role="form" action="/login/resetpwd/" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="firstname" class="col-sm-2 control-label col-sm-offset-2">账号</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="account" id="firstname" placeholder="请输入账号" value="{{ c_id }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="newpwd" class="col-sm-2 control-label col-sm-offset-2">新密码</label>
+                <div class="col-sm-4">
+                    <input type="password" class="form-control" name="newpwd" id="newpwd" placeholder="请输入新密码" value="{{ c_pwd }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="re_newpwd" class="col-sm-2 control-label col-sm-offset-2">确认新密码</label>
+                <div class="col-sm-4">
+                    <input type="password" class="form-control" name="confirm" id="re_newpwd" placeholder="请确认新密码" value="{{ c_pwd }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="lastname" class="col-sm-2 control-label col-sm-offset-2">验证手机号</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="tel" id="lastname" placeholder="请输入绑定的手机号" value="{{ c_tel }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="showPassword">显示密码
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <script>
+                // 在页面加载完成后检查err_msg是否为空
+                window.onload = function () {
+                    var err_msg = "{{ err_msg }}";
+                    if (err_msg) {
+                        alert(err_msg); // 弹窗显示错误消息
+                    }
+                }
+            </script>
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-4">
+                    <button type="submit" class="btn btn-primary btn-block">重置密码</button>
+                </div>
+            </div>
+        </form>
+    </fieldset>
+</div>
+
+<script>
+    const passwordInput = document.getElementById('newpwd');
+    const confirm = document.getElementById('re_newpwd');
+    const showPasswordCheckbox = document.getElementById('showPassword');
+
+    showPasswordCheckbox.addEventListener('change', function () {
+        if (showPasswordCheckbox.checked) {
+            passwordInput.type = 'text'; // 显示密码
+            confirm.type = 'text';
+        } else {
+            passwordInput.type = 'password'; // 隐藏密码
+            confirm.type = 'password'; // 隐藏密码
+        }
+    });
+</script>
+
+</body>
+</html>
+{#{% load static %}#}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Title</title>#}
+{#    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">#}
+{#</head>#}
+{#<body>#}
+{#<div class="container table-bordered" style="margin-top: 50px;">#}
+{#    <fieldset class="col-md-12">#}
+{#        <legend><h2 class="text-center"><b>重置密码</b></h2></legend>#}
+{#        <form class="form-horizontal col-sm-offset-3" role="form" action="/login/resetpwd/" method="post">#}
+{#            {% csrf_token %}#}
+{#            <div class="form-group">#}
+{#                <label for="firstname" class="col-sm-2 control-label">账号</label>#}
+{#                <div class="col-sm-4">#}
+{#                    <input type="text" class="form-control" name="account" id="firstname" placeholder="请输入账号" value="{{ c_id }}">#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="form-group">#}
+{#                <label for="newpwd" class="col-sm-2 control-label">新密码</label>#}
+{#                <div class="col-sm-4">#}
+{#                    <input type="password" class="form-control" name="newpwd" id="newpwd" placeholder="请输入新密码" value="{{ c_pwd }}">#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="form-group">#}
+{#                <label for="re_newpwd" class="col-sm-2 control-label">确认新密码</label>#}
+{#                <div class="col-sm-4">#}
+{#                    <input type="password" class="form-control" name="confirm" id="re_newpwd" placeholder="请确认新密码" value="{{ c_pwd }}">#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="form-group">#}
+{#                <label for="lastname" class="col-sm-2 control-label">验证手机号</label>#}
+{#                <div class="col-sm-4">#}
+{#                    <input type="text" class="form-control" name="tel" id="lastname" placeholder="请输入绑定的手机号" value="{{ c_tel }}">#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="form-group">#}
+{#                <div class="col-sm-offset-2 col-sm-10">#}
+{#                    <div class="checkbox">#}
+{#                        <label>#}
+{#                            <input type="checkbox" id="showPassword">显示密码#}
+{#                        </label>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <script>#}
+{#                // 在页面加载完成后检查err_msg是否为空#}
+{#                window.onload = function () {#}
+{#                    var err_msg = "{{ err_msg }}";#}
+{#                    if (err_msg) {#}
+{#                        alert(err_msg); // 弹窗显示错误消息#}
+{#                    }#}
+{#                }#}
+{#            </script>#}
+{#            <div class="form-group">#}
+{#                <div class="col-sm-offset-2 col-sm-4">#}
+{#                    <button type="submit" class="btn btn-primary btn-block">重置密码</button>#}
+{#                </div>#}
+{#            </div>#}
+{#        </form>#}
+{#    </fieldset>#}
+{#</div>#}
+{##}
+{#<script>#}
+{#    const passwordInput = document.getElementById('newpwd');#}
+{#    const confirm = document.getElementById('re_newpwd');#}
+{#    const showPasswordCheckbox = document.getElementById('showPassword');#}
+{##}
+{#    showPasswordCheckbox.addEventListener('change', function () {#}
+{#        if (showPasswordCheckbox.checked) {#}
+{#            passwordInput.type = 'text'; // 显示密码#}
+{#            confirm.type = 'text';#}
+{#        } else {#}
+{#            passwordInput.type = 'password'; // 隐藏密码#}
+{#            confirm.type = 'password'; // 隐藏密码#}
+{#        }#}
+{#    });#}
+{#</script>#}
+{##}
+{#</body>#}
+{#</html>#}

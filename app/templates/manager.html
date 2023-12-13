@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员主页</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        /* 自定义下拉菜单触发链接点击后的样式 */
+        .navbar-default .navbar-nav .open .dropdown-toggle:focus,
+        .navbar-default .navbar-nav .open .dropdown-toggle:hover {
+            background-color: #0056b3; /* 设置点击后的背景颜色*/
+        }
+
+        body {
+        {#background-image: linear-gradient(to left, #d9edf7, #d5d5d5);#}{#display: flex;#}{#justify-content: center;#}{#align-items: center;#}{#height: 100vh;#}{#background-image: url('{% static 'bg.jpg' %}');#}{#background-size: cover;#} background-image: url('{% static 'bg.jpg' %}');
+            background-size: cover;
+        }
+
+        .navbar {
+        {#text-align: center;#} height: 80px; /* 设置导航栏的高度，这里为80px */
+        {#    border-radius: 20px;#} box-shadow: -3px 3px 15px #0056b3;
+            border: none;
+        }
+
+        /* 自定义导航链接的高度 */
+        .navbar-nav > li > a {
+            line-height: 48px; /* 设置导航链接的高度，使其垂直居中 */
+        }
+
+        .box {
+            backdrop-filter: blur(10px) brightness(103%);
+            box-shadow: -3px 3px 15px #adadad;
+            border-radius: 15px;
+            margin-top: 30px;
+            border: none;
+        }
+
+        .text {
+            margin-top: 30px;
+        }
+        .font {
+            margin-top: 10px;
+            font-size: 80px;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-default" role="navigation" style="background-color: #007BFF ; width: 1200px; margin: 0 auto">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/manager/?m_id={{ id }}&m_name={{ name }}"
+               style="font-size: 30px;  color: white;  margin-top: 5px">
+                <span class="glyphicon glyphicon-home"></span>
+                <b>校园巴士管理</b>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="example-navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown" style="margin-top: 0px">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 16px; color: white;">
+                        {{ name }}
+                        <span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="/manager/info/?m_id={{ id }}&m_name={{ name }}">个人信息</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/login/">退出登录</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container" style="display: flex; justify-content: center; align-items: center; margin-top: 200px">
+    <div class="col-sm-12 col-sm-offset-0" style="display: flex; justify-content: center">
+        <a class="btn box col-sm-3" href="/manager/manage_user/?m_id={{ id }}&m_name={{ name }}" style="height: 200px;">
+            <span class="glyphicon glyphicon-user font"></span>
+            <br/>
+            <span class="col-sm-12 text">
+                <b style="font-size: 30px">账 户 管 理</b>
+            </span>
+        </a>
+        <a class="btn box col-sm-3 col-sm-offset-1" href="/manager/manage_sche/?m_id={{ id }}&m_name={{ name }}">
+            <span class="glyphicon glyphicon-calendar font"></span>
+            <br/>
+            <span class="col-sm-12 text">
+                <b style="font-size: 30px">调 度 管 理</b>
+            </span>
+        </a>
+        <a class="btn box col-sm-3 col-sm-offset-1 " href="/manager/manage_order/?m_id={{ id }}&m_name={{ name }}">
+            <span class="glyphicon glyphicon-credit-card font"></span>
+            <br/>
+            <span class="col-sm-12 text">
+                <b style="font-size: 30px">订 单 管 理</b>
+            </span>
+        </a>
+    </div>
+</div>
+
+
+</body>
+</html>

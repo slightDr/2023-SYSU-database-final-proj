@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加用户</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        /* 自定义下拉菜单触发链接点击后的样式 */
+        .navbar-default .navbar-nav .open .dropdown-toggle:focus,
+        .navbar-default .navbar-nav .open .dropdown-toggle:hover {
+            background-color: #0056b3; /* 设置点击后的背景颜色*/
+        }
+
+        body {
+            background-image: url('{% static 'bg.jpg' %}');
+            background-size: cover;
+        }
+
+        .navbar {
+            height: 80px; /* 设置导航栏的高度，这里为80px */
+            box-shadow: -3px 3px 15px #0056b3;
+            border: none;
+        }
+
+        /* 自定义导航链接的高度 */
+        .navbar-nav > li > a {
+            line-height: 48px; /* 设置导航链接的高度，使其垂直居中 */
+        }
+
+        .box {
+            backdrop-filter: blur(10px) brightness(112%);
+            box-shadow: -3px 3px 15px #adadad;
+            border-radius: 15px;
+            margin-top: 20px;
+            border: none;
+        }
+
+        tr td {
+            vertical-align: middle;
+        }
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation" style="background-color: #007BFF ; width: 1200px; margin: 0 auto">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/manager/?m_id={{ id }}&m_name={{ name }}"
+               style="font-size: 30px;  color: white;  margin-top: 5px">
+                <span class="glyphicon glyphicon-home"></span>
+                <b>校园巴士管理</b>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="example-navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown" style="margin-top: 0px">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 16px; color: white;">
+                        {{ name }}
+                        <span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="/manager/info/?m_id={{ id }}&m_name={{ name }}">个人信息</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/login/">退出登录</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container table-bordered col-sm-4 col-sm-offset-4 box">
+    <legend><h2 class="text-center"><b>添加用户</b></h2></legend>
+    <form class="form-horizontal col-sm-8 col-sm-offset-2"
+          action="/manager/manage_user/add/?m_id={{ id }}&m_name={{ name }}" method="post">
+        {% csrf_token %}
+
+        <span class="form-group">
+            <label for="c_id" class="">账号</label>
+            <input class="form-control" type="text" id="c_id" name="c_id" required>
+        </span>
+
+        <span class="form-group">
+            <label for="c_name">姓名：</label>
+            <input class="form-control" type="text" id="c_name" name="c_name" required>
+        </span>
+
+        <span class="form-group">
+            <label for="c_pwd">密码：</label>
+            <input class="form-control" type="text" id="c_pwd" name="c_pwd" required>
+        </span>
+
+        <span class="form-group">
+            <label for="c_tel">联系方式：</label>
+            <input class="form-control" type="text" id="c_tel" name="c_tel" required>
+        </span>
+
+        <span class="form-group">
+            <label for="c_tors">身份：</label>
+            <select class="form-control" id="c_tors" name="c_tors" required>
+                <option value="student">学生</option>
+                <option value="teacher">老师</option>
+            </select>
+        </span>
+
+        <div>{{ err_msg }}</div>
+
+        <div style="margin-bottom: 20px">
+            <input class="btn btn-success btn-block" type="submit" value="添加">
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>

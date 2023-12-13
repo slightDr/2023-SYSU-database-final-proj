@@ -1,0 +1,234 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>校园巴士主页</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        /* 自定义下拉菜单触发链接点击后的样式 */
+        .navbar-default .navbar-nav .open .dropdown-toggle:focus,
+        .navbar-default .navbar-nav .open .dropdown-toggle:hover {
+            background-color: #0056b3; /* 设置点击后的背景颜色*/
+        }
+        body {
+            {#background-image: linear-gradient(to left, #d9edf7, #d5d5d5);#}
+            {#display: flex;#}
+            {#justify-content: center;#}
+            {#align-items: center;#}
+            {#height: 100vh;#}
+            background-image: url('{% static 'bg.jpg' %}');
+            background-size: 100% 220%;
+        }
+
+        .navbar {
+        {#text-align: center;#} height: 80px; /* 设置导航栏的高度，这里为80px */
+        {#    border-radius: 20px;#}
+            box-shadow: -3px 3px 15px {#  #}#0056b3;
+            border: none;
+        }
+
+        /* 自定义导航链接的高度 */
+        .navbar-nav > li > a {
+            line-height: 48px; /* 设置导航链接的高度，使其垂直居中 */
+        }
+        .box {
+            backdrop-filter: blur(10px) brightness(103%);
+            box-shadow: -3px 3px 10px #adadad;
+            border-radius: 15px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation" style="background-color: #007BFF ; width: 1200px; margin: 0 auto">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/user/?c_id={{ id }}&c_name={{ name }}"
+               style="font-size: 30px;  color: white;  margin-top: 5px">
+                <span class="glyphicon glyphicon-home"></span>
+                <b>校园巴士</b>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="example-navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown" style="margin-top: 0px">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 16px; color: white;">
+                        {{ name }}
+                        <span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="/user/info/?c_id={{ id }}&c_name={{ name }}">个人信息</a></li>
+                        <li><a href="/user/account/?c_id={{ id }}&c_name={{ name }}">我的账单</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/login/">退出登录</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- 查询栏 -->
+<div id="search-bar" class="col-sm-6 col-sm-offset-3 table-bordered box" style="margin-top: 100px; height: 300px">
+    {#    <div class="row">#}
+    {#        <div class="">#}
+    <form id="search-form" action="/user/search/" method="get" class="form-horizontal" style="color: #1b6d85; margin-top: 50px">
+        <div class="form-group" style="font-size: 16px;">
+            <label for="departure" class="col-sm-2 control-label col-sm-offset-2">
+                <span class="glyphicon glyphicon-map-marker" style="color: #4cae4c;"></span>
+                起始站
+            </label>
+            <div class="col-sm-5">
+                <select class="form-control" name="departure" id="departure">
+                    <option value="南校">南校</option>
+                    <option value="东校">东校</option>
+                    <option value="北校">北校</option>
+                    <option value="珠海校区">珠海校区</option>
+                    <option value="深圳校区">深圳校区</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" style="font-size: 16px">
+            <label for="destination" class="col-sm-2 control-label col-sm-offset-2">
+                <span class="glyphicon glyphicon-map-marker" style="color: #c9302c"></span>
+                目的地
+            </label>
+            <div class="col-sm-5">
+                <select class="form-control" name="destination" id="destination">
+                    <option value="南校">南校</option>
+                    <option value="东校">东校</option>
+                    <option value="北校">北校</option>
+                    <option value="珠海校区">珠海校区</option>
+                    <option value="深圳校区">深圳校区</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" style="font-size: 16px">
+            <label for="departure-date" class="col-sm-2 control-label col-sm-offset-2">
+                <span class="fas fa-calendar-alt"></span>
+                出发日期
+            </label>
+            <div class="col-sm-5">
+                <input class="form-control" type="date" id="departure-date" name="departure-date">
+            </div>
+        </div>
+        <input type="hidden" name="c_id" value="{{ id }}">
+        <input type="hidden" name="c_name" value="{{ name }}">
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-5" style="margin-top: 20px;">
+                <input class="btn btn-primary btn-block" type="submit" value="查询">
+            </div>
+        </div>
+    </form>
+    {#        </div>#}
+    {#    </div>#}
+</div>
+
+<script>
+    // 在页面加载后检查err_msg
+    window.onload = function () {
+        const errMessage = "{{ err_msg }}";
+        if (errMessage !== "") {
+            alert(errMessage);  // 使用alert弹出消息框
+        }
+    };
+</script>
+<script>
+    const myDateInput = document.getElementById('departure-date');
+    myDateInput.value = {{ current_date }};
+
+    // 获取 URL 参数
+    const urlParams = new URLSearchParams(window.location.search);
+    const c_id = urlParams.get('c_id');
+    const c_name = urlParams.get('c_name');
+    // 使用参数
+    console.log('id:', c_id);
+    console.log('name:', c_name);
+</script>
+</body>
+</html>
+
+{#{% load static %}#}
+{##}
+{#<!DOCTYPE html>#}
+{#<html>#}
+{#<head>#}
+{#    <title>网页导航栏示例</title>#}
+{#    <link rel="stylesheet" type="text/css" href="{% static 'user.css' %}">#}
+{#</head>#}
+{#<body>#}
+{#<div id="navbar">#}
+{#    <h1><a href="/user/?c_id={{ id }}&c_name={{ name }}">校园巴士</a></h1>#}
+{#    <div class="dropdown">#}
+{#        <a href="#">{{ name }}</a>#}
+{#        <div class="dropdown-content">#}
+{#            <a href="/user/info/?c_id={{ id }}&c_name={{ name }}">个人信息</a>#}
+{#            <a href="/user/account/?c_id={{ id }}&c_name={{ name }}">我的账单</a>#}
+{#            <a href="/login/">退出登录</a>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#<!-- 查询栏 -->#}
+{#<div id="search-bar" class="custom-select">#}
+{#    <form id="search-form" action="/user/search/" method="get">#}
+{#        <div>起始站</div>#}
+{#        <select class="search-input" name="departure">#}
+{#            <option value="南校">南校</option>#}
+{#            <option value="东校">东校</option>#}
+{#            <option value="北校">北校</option>#}
+{#            <option value="珠海校区">珠海校区</option>#}
+{#            <option value="深圳校区">深圳校区</option>#}
+{#        </select>#}
+{#        <div>目的地</div>#}
+{#        <select class="search-input" name="destination">#}
+{#            <option value="南校">南校</option>#}
+{#            <option value="东校">东校</option>#}
+{#            <option value="北校">北校</option>#}
+{#            <option value="珠海校区">珠海校区</option>#}
+{#            <option value="深圳校区">深圳校区</option>#}
+{#        </select>#}
+{#        <div>日期</div>#}
+{#        <input class="search-input" type="date" id="departure-date" name="departure-date">#}
+{##}
+{#        <!-- 添加隐藏输入字段来传递id和name参数 -->#}
+{#        <input type="hidden" name="c_id" value="{{ id }}">#}
+{#        <input type="hidden" name="c_name" value="{{ name }}">#}
+{##}
+{#        <div>{{ err_msg }}</div>#}
+{##}
+{#        <input class="search-input" type="submit" value="查询">#}
+{#    </form>#}
+{#</div>#}
+{#<script>#}
+{#    // 在页面加载后检查err_msg#}
+{#    window.onload = function () {#}
+{#        const errMessage = "{{ err_msg }}";#}
+{#        if (errMessage !== "") {#}
+{#            alert(errMessage);  // 使用alert弹出消息框#}
+{#        }#}
+{#    };#}
+{#</script>#}
+{#<script>#}
+{#    const myDateInput = document.getElementById('departure-date');#}
+{#    myDateInput.value = {{ current_date }};#}
+{##}
+{#    // 获取 URL 参数#}
+{#    const urlParams = new URLSearchParams(window.location.search);#}
+{#    const c_id = urlParams.get('c_id');#}
+{#    const c_name = urlParams.get('c_name');#}
+{#    // 使用参数#}
+{#    console.log('id:', c_id);#}
+{#    console.log('name:', c_name);#}
+{#</script>#}
+{##}
+{#</body>#}
+{#</html>#}
+

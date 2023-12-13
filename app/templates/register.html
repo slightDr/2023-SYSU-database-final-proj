@@ -1,0 +1,190 @@
+{#{% load static %}#}
+{##}
+{#<!DOCTYPE html>#}
+{#<html>#}
+{#<head>#}
+{#    <title>注册页面</title>#}
+{#    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">#}
+{#</head>#}
+{#<body>#}
+{#<h2>注册</h2>#}
+{#<form class="register_container" action="/register/" method="post">#}
+{#    {% csrf_token %}#}
+{##}
+{#    <label for="c_id">学工号：</label>#}
+{#    <input type="text" id="c_id" name="c_id" value="{{ form.0 }}" required>#}
+{#    <br>#}
+{#    <label for="c_name">姓名：</label>#}
+{#    <input type="text" id="c_name" name="c_name" value="{{ form.1 }}" required>#}
+{#    <br>#}
+{#    <label for="c_pwd">密码：</label>#}
+{#    <input type="password" id="c_pwd" name="c_pwd" value="{{ form.2 }}" required>#}
+{#    <br>#}
+{#    <label for="sure_pwd">确认密码：</label>#}
+{#    <input type="password" id="sure_pwd" name="sure_pwd" value="{{ sure }}" required>#}
+{#    <input type="checkbox" id="showPassword">#}
+{#    <label for="showPassword">显示密码</label>#}
+{#    <br>#}
+{#    <br>#}
+{#    <label for="c_tel">联系方式：</label>#}
+{#    <input type="text" id="c_tel" name="c_tel" value="{{ form.3 }}" required>#}
+{#    <br>#}
+{#    <label for="c_tors">身份：</label>#}
+{#    <select id="c_tors" name="c_tors" required>#}
+{#        <option value="student">学生</option>#}
+{#        <option value="teacher">老师</option>#}
+{#    </select>#}
+{#    <script>#}
+{#        // 在页面加载完成后检查err_msg是否为空#}
+{#        window.onload = function () {#}
+{#            var err_msg = "{{ err_msg }}";#}
+{#            if (err_msg) {#}
+{#                alert(err_msg); // 弹窗显示错误消息#}
+{#            }#}
+{#        }#}
+{#    </script>#}
+{#    <div class="button-container">#}
+{#        <input type="submit" value="注册">#}
+{#    </div>#}
+{##}
+{#    <script>#}
+{#        const passwordInput = document.getElementById('c_pwd');#}
+{#        const passwordSure = document.getElementById('sure_pwd');#}
+{#        const showPasswordCheckbox = document.getElementById('showPassword');#}
+{##}
+{#        showPasswordCheckbox.addEventListener('change', function () {#}
+{#            if (showPasswordCheckbox.checked) {#}
+{#                passwordInput.type = 'text';#}
+{#                passwordSure.type = 'text'; // 显示密码#}
+{#            } else {#}
+{#                passwordInput.type = 'password';#}
+{#                passwordSure.type = 'password'; // 隐藏密码#}
+{#            }#}
+{#        });#}
+{#    </script>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>注册</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <style>
+        body {
+            {#background-image: linear-gradient(to left, #d9edf7, #d5d5d5);#}
+            {#display: flex;#}
+            {#justify-content: center;#}
+            {#align-items: center;#}
+            {#height: 100vh;#}
+            background-image: url('{% static 'bg.jpg' %}');
+            background-size: cover;
+        }
+
+        .box {
+            backdrop-filter: blur(20px) brightness(103%);
+            box-shadow: -3px 3px 15px #adadad;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container box col-sm-8 col-sm-offset-2" style="margin-top: 50px;">
+    <fieldset class="col-md-12">
+        <legend><h2 class="text-center"><b>用户注册</b></h2></legend>
+        <form class="form-horizontal" role="form" action="/register/" method="post">
+            {% csrf_token %}
+            <div class="form-group center-block">
+                <label for="c_id" class="col-sm-2 control-label col-sm-offset-2">学工号</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="c_id" id="c_id" placeholder="请输入学工号"
+                           value="{{ c_id }}" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c_name" class="col-sm-2 control-label col-sm-offset-2">姓名</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="c_name" id="c_name" placeholder="请输入姓名"
+                           value="{{ c_name }}" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c_pwd" class="col-sm-2 control-label col-sm-offset-2">密码</label>
+                <div class="col-sm-4">
+                    <input type="password" class="form-control" name="c_pwd" id="c_pwd" placeholder="请输入密码"
+                           value="{{ c_pwd }}" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="confirm" class="col-sm-2 control-label col-sm-offset-2">确认密码</label>
+                <div class="col-sm-4">
+                    <input type="password" class="form-control" name="confirm" id="confirm" placeholder="请再次确认密码"
+                           value="{{ c_pwd }}" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="showPassword">显示密码
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c_tel" class="col-sm-2 control-label col-sm-offset-2">
+                    联系方式
+                </label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="c_tel" id="c_tel" placeholder="请输入联系方式"
+                           value="{{ c_tel }}" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c_tors" class="col-sm-2 control-label col-sm-offset-2">
+                    身份
+                </label>
+                <div class="col-sm-4">
+                    <select class="form-control" id="c_tors" name="c_tors" required>
+                        <option value="student">学生</option>
+                        <option value="teacher">老师</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-4">
+                    <button type="submit" class="btn btn-primary btn-block">注册</button>
+                </div>
+            </div>
+            <script>
+                // 在页面加载完成后检查err_msg是否为空
+                window.onload = function () {
+                    var err_msg = "{{ err_msg }}";
+                    if (err_msg) {
+                        alert(err_msg); // 弹窗显示错误消息
+                    }
+                }
+            </script>
+
+            <script>
+                const passwordInput = document.getElementById('c_pwd');
+                const passwordSure = document.getElementById('confirm');
+                const showPasswordCheckbox = document.getElementById('showPassword');
+
+                showPasswordCheckbox.addEventListener('change', function () {
+                    if (showPasswordCheckbox.checked) {
+                        passwordInput.type = 'text';
+                        passwordSure.type = 'text'; // 显示密码
+                    } else {
+                        passwordInput.type = 'password';
+                        passwordSure.type = 'password'; // 隐藏密码
+                    }
+                });
+            </script>
+        </form>
+    </fieldset>
+</div>

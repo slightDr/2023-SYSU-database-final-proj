@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>订单管理</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        /* 自定义下拉菜单触发链接点击后的样式 */
+        .navbar-default .navbar-nav .open .dropdown-toggle:focus,
+        .navbar-default .navbar-nav .open .dropdown-toggle:hover {
+            background-color: #0056b3; /* 设置点击后的背景颜色*/
+        }
+
+        body {
+        {#background-image: linear-gradient(to left, #d9edf7, #d5d5d5);#}{#display: flex;#}{#justify-content: center;#}{#align-items: center;#}{#height: 100vh;#}{#background-image: url('{% static 'bg.jpg' %}');#}{#background-size: cover;#} background-image: url('{% static 'bg.jpg' %}');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .navbar {
+            height: 80px; /* 设置导航栏的高度，这里为80px */
+            box-shadow: -3px 3px 15px #0056b3;
+            border: none;
+            position: fixed;
+            top: 0px;
+            left: 137px;
+            z-index: 1000;
+        }
+
+        .placeholder {
+            height: 80px; /* 与导航栏相同的高度 */
+        }
+
+        /* 自定义导航链接的高度 */
+        .navbar-nav > li > a {
+            line-height: 48px; /* 设置导航链接的高度，使其垂直居中 */
+        }
+
+        .box {
+            backdrop-filter: blur(18px) brightness(120%);
+            box-shadow: -3px 3px 15px #adadad;
+            border-radius: 15px;
+            margin-top: 30px;
+            border: none;
+        }
+
+        .custom-form {
+            width: 80px;
+        }
+
+        .custom-td{
+            vertical-align: middle;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-default" role="navigation" style="background-color: #007BFF ; width: 1200px; margin: 0 auto">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/manager/?m_id={{ id }}&m_name={{ name }}"
+               style="font-size: 30px;  color: white;  margin-top: 5px">
+                <span class="glyphicon glyphicon-home"></span>
+                <b>校园巴士管理</b>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="example-navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown" style="margin-top: 0px">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 16px; color: white;">
+                        {{ name }}
+                        <span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="/manager/info/?m_id={{ id }}&m_name={{ name }}">个人信息</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/login/">退出登录</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="placeholder"></div>
+
+<form class="form-horizontal box col-sm-10 col-sm-offset-1" method="post" action="#">
+    {% csrf_token %}
+    <table class="table table-hover">
+        <tr>
+            <th><h4><b>订单号</b></h4></th>
+            <th><h4><b>账号</b></h4></th>
+            <th><h4><b>起点</b></h4></th>
+            <th><h4><b>终点</b></h4></th>
+            <th><h4><b>起始时间</b></h4></th>
+            <th><h4><b>车牌</b></h4></th>
+            <th><h4><b>价格</b></h4></th>
+            <th><h4><b>状态</b></h4></th>
+            <th><h4><b>动作</b></h4></th>
+        </tr>
+        {% for item in list %}
+            <tr> {# class="{% if item.7 == '已退款' %} danger {% else %} success {% endif %}" #}
+                <td class="custom-td col-sm-1" style="vertical-align: middle;">{{ item.0 }}</td>
+                <td class="custom-td col-sm-1" style="vertical-align: middle;">{{ item.1 }}</td>
+                <td class="custom-td col-sm-1" style="vertical-align: middle;">{{ item.2 }}</td>
+                <td class="custom-td col-sm-1" style="vertical-align: middle;">{{ item.3 }}</td>
+                <td class="custom-td col-sm-1" style="vertical-align: middle;">{{ item.4 }}</td>
+                <td class="custom-td col-sm-1" style="vertical-align: middle;">{{ item.5 }}</td>
+                <td class="custom-td col-sm-1" style="vertical-align: middle;">{{ item.6 }}</td>
+                <td class="custom-td col-sm-1" style="vertical-align: middle; color: {% if item.7 == '已退款' %} red {% else %} green {% endif %}">
+                    <b>{{ item.7 }}</b>
+                </td>
+                <td class="custom-td col-sm-1" style="vertical-align: middle;">
+                    <a class="edit-button btn btn-primary" href="javascript:void(0);" onclick="editRow(this)">修改</a>
+                    <a class="btn btn-danger"
+                       href="/manager/manage_order/?m_id={{ id }}&m_name={{ name }}&delete_id={{ item.0 }}">删除</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</form>
+
+<script>
+    function editRow(button) {
+        var row = button.closest('tr');
+        var editButton = row.querySelector('.edit-button');
+        var cells = row.getElementsByTagName('td');
+
+        if (editButton.innerText === '修改') {
+            for (var i = cells.length - 2; i < cells.length - 1; i++) { // 排除最后的动作一栏
+                var cellText = cells[i].innerText;
+                var inputField = document.createElement('input');
+                inputField.type = 'text';
+                inputField.value = cellText;
+                inputField.id = 'uniqueId' + i; // 添加唯一的 id 属性
+                inputField.classList.add('form-control');
+                inputField.classList.add('custom-form');
+                cells[i].innerHTML = '';
+                cells[i].appendChild(inputField);
+            }
+
+            editButton.innerText = '保存';
+            editButton.style.backgroundColor = 'green'; // 修改按钮颜色为绿色
+        } else if (editButton.innerText === '保存') {
+            var order_id = cells[0].innerText
+            var inputs = row.getElementsByTagName('input');
+            var newData = [];
+            newData.push(order_id)
+            for (var i = 0; i < inputs.length; i++) {
+                newData.push(inputs[i].value);
+            }
+            // 获取 CSRF 令牌的值
+            var csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            // 使用 AJAX 发送数据到 Django 后端
+            var xhr = new XMLHttpRequest();
+            var url = '/modify_order/'; // 根据你的 URL 映射设置
+            xhr.open('POST', url, true);
+            // 添加 CSRF 令牌到请求头
+            xhr.setRequestHeader('X-CSRFToken', csrfToken);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); // 设置请求类型
+            var data = JSON.stringify(newData);
+            xhr.send(data);
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // 服务器返回成功响应
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                } else {
+                    // 服务器返回错误响应
+                    console.error('提交数据时发生错误');
+                }
+            };
+
+            // After updating on the server, update the row with new data.
+            for (var i = cells.length - 2; i < cells.length - 1; i++) {
+                cells[i].innerText = newData[1];
+                cells[i].style.color = (newData[1] == "已支付") ? "green" : "red";
+                cells[i].style.fontWeight = "bold";
+            }
+
+            editButton.innerText = '修改';
+            editButton.style.backgroundColor = '#337ab7'; // 修改按钮颜色为蓝色
+        }
+    }
+
+</script>
+
+</body>
+</html>
